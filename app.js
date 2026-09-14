@@ -152,6 +152,8 @@ function go(view,push=true){
  if(view!=='home') closeGiftModal();
  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active','view-enter','view-leave'));
  current=view;
+ const langWrap=document.querySelector('.lang-wrap');
+ if(langWrap) langWrap.style.display=view==='home'?'none':'flex';
  document.body.classList.remove('page-transition');
  void document.body.offsetWidth;
  document.body.classList.add('page-transition');
