@@ -1,11 +1,27 @@
 (function(){
-  const languageNames={zh:'繁體中文',en:'English',ja:'日本語',ko:'한국어'};
+  const languageNames={zh:'繁體中文',en:'English',ja:'日本語',ko:'한국어',vi:'Tiếng Việt'};
+
+  if(typeof detectLang==='function'){
+    const originalDetectLang=detectLang;
+    detectLang=function(){
+      let saved=null;
+      try{saved=localStorage.getItem('yidear_lang');}catch(e){}
+      if(saved && T[saved]) return saved;
+      const browserLang=(navigator.language||'').toLowerCase();
+      if(browserLang.startsWith('vi') && T.vi) return 'vi';
+      return originalDetectLang();
+    };
+  }
 
   function enhanceLanguageUI(){
     const select=document.getElementById('langSelect');
     const wrap=document.querySelector('.lang-wrap');
     const hero=document.querySelector('#view-home .hero');
     if(!select || !wrap || !hero) return false;
+
+    if(!select.querySelector('option[value="vi"]')){
+      select.insertAdjacentHTML('beforeend','<option value="vi">Tiếng Việt</option>');
+    }
 
     if(!wrap.querySelector('.lang-globe')){
       wrap.insertAdjacentHTML('afterbegin',`<span class="lang-globe" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21M12 3C9.7 5.5 8.5 8.5 8.5 12s1.2 6.5 3.5 9"></path></svg></span>`);
