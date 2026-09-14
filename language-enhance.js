@@ -8,8 +8,10 @@
     if(!select || !wrap || !hero) return false;
 
     if(!wrap.querySelector('.lang-globe')){
-      wrap.insertAdjacentHTML('afterbegin',`<span class="lang-globe" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21M12 3C9.7 5.5 8.5 8.5 8.5 12s1.2 6.5 3.5 9"></path></svg></span><span class="lang-copy"><strong>語言</strong><span>LANGUAGE</span></span>`);
+      wrap.insertAdjacentHTML('afterbegin',`<span class="lang-globe" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21M12 3C9.7 5.5 8.5 8.5 8.5 12s1.2 6.5 3.5 9"></path></svg></span>`);
     }
+
+    wrap.querySelectorAll('.lang-copy').forEach(el=>el.remove());
 
     if(!hero.querySelector('.home-language')){
       const buttons=Object.entries(languageNames).map(([code,label])=>`<button type="button" data-set-lang="${code}" aria-pressed="false">${label}</button>`).join('');
