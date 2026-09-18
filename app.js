@@ -2,13 +2,22 @@ let lang='zh';
 let current='home';
 let giftTimer=null;
 
+function urlLang(){
+ try{
+   const q=new URLSearchParams(location.search).get('lang');
+   return q && T[q] ? q : null;
+ }catch(e){return null}
+}
 function detectLang(){
+ const direct=urlLang();
+ if(direct) return direct;
  let saved=null;
  try{ saved=localStorage.getItem('yidear_lang'); }catch(e){}
  if(saved && T[saved]) return saved;
  const b=(navigator.language||'zh').toLowerCase();
  if(b.startsWith('ja')) return 'ja';
  if(b.startsWith('ko')) return 'ko';
+ if(b.startsWith('vi')) return 'vi';
  if(b.startsWith('en')) return 'en';
  return 'zh';
 }
@@ -182,11 +191,18 @@ function boot(){
  document.getElementById('langSelect').addEventListener('change',e=>{
   lang=e.target.value;
   try{ localStorage.setItem('yidear_lang',lang); }catch(err){}
+  try{
+    const u=new URL(location.href);
+    u.searchParams.set('lang',lang);
+    history.replaceState(history.state,'',u.pathname+u.search+u.hash);
+  }catch(err){}
   applyLang();
  });
  document.getElementById('itemSearch').addEventListener('input',renderItems);
  document.getElementById('channelSearch').addEventListener('input',renderChannels);
- lang=detectLang(); applyLang();
+ lang=detectLang();
+ try{ localStorage.setItem('yidear_lang',lang); }catch(err){}
+ applyLang();
  const initial=location.hash.slice(1)||'home';
  history.replaceState({view:initial},'',location.hash||'#home');
  go(initial,false);
