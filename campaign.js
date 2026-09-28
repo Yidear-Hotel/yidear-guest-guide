@@ -1,7 +1,7 @@
 window.GIFT_CAMPAIGN = {
   id: '2026-09-v7',
   enabled: true,
-  autoOpen: true,
+  autoOpen: false,
   autoOpenDelay: 1400,
   image: 'assets/assets_gift_current_20260909.jpg?v=20260909-7',
   link: 'https://reurl.cc/kE7jLb',
